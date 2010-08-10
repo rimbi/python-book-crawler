@@ -1,0 +1,31 @@
+<html>
+<head>
+</head>
+<body>
+<script type="text/javascript">
+function sendServiceRequest(selectedText, callback) {
+    var serviceCall = "http://127.0.0.1:8000/myapp/default/query.xml?column_name=isbn&query_string=" + selectedText;
+    var req = new XMLHttpRequest();
+    req.open("GET", serviceCall, true);
+    req.onload = showBooks;
+    req.send(null);
+
+    function showBooks() {
+        callback(req.responseText);
+    }
+}
+
+
+function onRequest(request, sender, callback) {
+    if (request.action == 'fetchBooks') {
+        sendServiceRequest(request.selectedText, callback);
+    }
+}
+
+// Wire up the listener.
+chrome.extension.onRequest.addListener(onRequest);
+
+</script>
+<body>
+
+</html>

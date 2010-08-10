@@ -1,0 +1,24 @@
+{
+  "name": "Kitapsever",
+  "version": "1.0",
+  "description": "Kitapsever için en uygun kitabı bulur.",
+//  "browser_action": {
+//    "default_icon": "icon.png"
+//  },
+
+  "icons": {
+    "48" : "icon.png",
+    "128" : "icon.png"
+  },
+  "background_page" : "index.html",
+  "permissions": [
+    "http://*/*"
+  ],
+
+  "content_scripts": [
+      {
+          "matches": ["http://www.kitapyurdu.com/*", "http://www.idefix.com/*", "http://www.imge.com.tr/*"],
+          "js" : ["contentscript.js"]
+      }
+  ]
+}
