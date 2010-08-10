@@ -16,11 +16,8 @@ function showBooks(responseText) {
   
 }
 
-function myfunction() {
-    selectedText = document.getSelection().toString();
-    chrome.extension.sendRequest({'action' : 'fetchBooks', 'selectedText' : selectedText}, showBooks);
-}
-
-var re = new RegExp('ISBN:([0-9]+)');
-document.ondblclick = myfunction;
+var re = /ISBN.*[0-9]{10}/g;
+isbn = document.body.innerHTML.match(re)[0].slice(-10)
+alert(isbn);
+chrome.extension.sendRequest({'action' : 'fetchBooks', 'selectedText' : isbn}, showBooks);
 
