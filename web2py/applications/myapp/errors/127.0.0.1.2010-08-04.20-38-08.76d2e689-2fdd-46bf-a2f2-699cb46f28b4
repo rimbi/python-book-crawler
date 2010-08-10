@@ -1,0 +1,17 @@
+(dp1
+S'output'
+p2
+S''
+sS'layer'
+p3
+S'/home/cem/web2py/applications/myapp/views/default/index.html'
+p4
+sS'code'
+p5
+S'response.write(\'<h1>Current Books</h1>\\n<ul>\\n\',escape=False)\nfor book in books:\n    response.write(\'\\n\',escape=False)\n    response.write(LI(A(book.name, _href=URL(f="show", args=book.id))))\n    response.write(\'\\n\',escape=False)\n    pass\nresponse.write(\'\\n</ul>\\n\',escape=False)'
+p6
+sS'traceback'
+p7
+S'Traceback (most recent call last):\n  File "/home/cem/web2py/gluon/restricted.py", line 178, in restricted\n    exec ccode in environment\n  File "/home/cem/web2py/applications/myapp/views/default/index.html", line 4, in <module>\n    {{=LI(A(book.name, _href=URL(f="show", args=book.id)))}}\n  File "/home/cem/web2py/gluon/html.py", line 184, in URL\n    raise SyntaxError, \'not enough information to build the url\'\nSyntaxError: not enough information to build the url\n'
+p8
+s.

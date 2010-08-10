@@ -1,0 +1,5 @@
+<books>
+{{for book in books:}}
+<book name="{{=book.name}}" author="{{=book.author}}" publisher="{{=book.publisher}}" link="{{=book.link}}" isbn="{{=book.isbn}}" price="{{=book.price}}"/>
+{{pass}}
+</books>

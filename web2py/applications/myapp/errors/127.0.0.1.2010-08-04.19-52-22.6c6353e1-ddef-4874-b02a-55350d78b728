@@ -1,0 +1,17 @@
+(dp1
+S'output'
+p2
+S''
+sS'layer'
+p3
+S'/home/cem/web2py/applications/myapp/models/db.py'
+p4
+sS'code'
+p5
+S'# -*- coding: utf-8 -*- \ndb = DAL("sqlite://books.db")\n\ndb.define_table(\'books\',\n   Field(\'name\'),\n   Field(\'author\'),\n   Field(\'isbn\', \'integer\'),\n   Field(\'publisher\'),\n   Field(\'price\', \'double\'),\n   Field(\'link\'))\n'
+p6
+sS'traceback'
+p7
+S'Traceback (most recent call last):\n  File "/home/cem/web2py/gluon/restricted.py", line 178, in restricted\n    exec ccode in environment\n  File "/home/cem/web2py/applications/myapp/models/db.py", line 10, in <module>\n    Field(\'link\'))\n  File "/home/cem/web2py/gluon/sql.py", line 1309, in define_table\n    t._create(migrate=migrate, fake_migrate=fake_migrate)\n  File "/home/cem/web2py/gluon/sql.py", line 1730, in _create\n    self._db._execute(query)\n  File "/home/cem/web2py/gluon/sql.py", line 897, in <lambda>\n    self._execute = lambda *a, **b: self._cursor.execute(*a, **b)\nOperationalError: table books already exists\n'
+p8
+s.

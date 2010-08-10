@@ -1,0 +1,17 @@
+(dp1
+S'output'
+p2
+S''
+sS'layer'
+p3
+S'/home/cem/web2py/applications/myapp/controllers/default.py'
+p4
+sS'code'
+p5
+S'# -*- coding: utf-8 -*- \n\n#########################################################################\n## This is a samples controller\n## - index is the default action of any application\n## - user is required for authentication and authorization\n## - download is for downloading files uploaded in the db (does streaming)\n## - call exposes all registered services (none by default)\n#########################################################################  \n\ndef index():\n    books = db().select(db.books.name.like(u\'bilgi\'), orderby=db.books.name)\n    return {"result":"Merhaba"}\n    return [{\'name\':book.name} for book in books]\n\ndef first():\n    form = FORM(INPUT(_name=\'book_name\', requires=IS_NOT_EMPTY()),\n              INPUT(_type=\'submit\'))\n    if form.accepts(request.vars, session):\n        session.book_name = form.vars.book_name\n        redirect(URL(f=\'second\'))\n    return dict(form=form)\n    \ndef user():\n    """\n    exposes:\n    http://..../[app]/default/user/login \n    http://..../[app]/default/user/logout\n    http://..../[app]/default/user/register\n    http://..../[app]/default/user/profile\n    http://..../[app]/default/user/retrieve_password\n    http://..../[app]/default/user/change_password\n    use @auth.requires_login()\n        @auth.requires_membership(\'group name\')\n        @auth.requires_permission(\'read\',\'table name\',record_id)\n    to decorate functions that need access control\n    """\n    return dict(form=auth())\n\n\ndef download():\n    """\n    allows downloading of uploaded files\n    http://..../[app]/default/download/[filename]\n    """\n    return response.download(request,db)\n\n\ndef call():\n    """\n    exposes services. for example:\n    http://..../[app]/default/call/jsonrpc\n    decorate with @services.jsonrpc the functions to expose\n    supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv\n    """\n    session.forget()\n    return service()\n\nresponse._vars=response._caller(index)\n'
+p6
+sS'traceback'
+p7
+S'Traceback (most recent call last):\n  File "/home/cem/web2py/gluon/restricted.py", line 178, in restricted\n    exec ccode in environment\n  File "/home/cem/web2py/applications/myapp/controllers/default.py", line 59, in <module>\n  File "/home/cem/web2py/gluon/globals.py", line 96, in <lambda>\n    self._caller = lambda f: f()\n  File "/home/cem/web2py/applications/myapp/controllers/default.py", line 12, in index\n    books = db().select(db.books.name.like(u\'bilgi\'), orderby=db.books.name)\n  File "/home/cem/web2py/gluon/sql.py", line 3144, in select\n    return self.parse(db,rows,self.colnames,SetClass=Set)\n  File "/home/cem/web2py/gluon/sql.py", line 3166, in parse\n    field = table[fieldname]\n  File "/home/cem/web2py/gluon/sql.py", line 1592, in __getitem__\n    return dict.__getitem__(self, str(key))\nKeyError: "name LIKE \'bilgi\'"\n'
+p8
+s.

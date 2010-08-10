@@ -1,0 +1,22 @@
+<body>
+<script type="text/javascript">
+var req = new XMLHttpRequest();
+req.open("GET", "http://127.0.0.1:8000/myapp/default/query.xml?column_name=author&query_string=gabriel", true);
+req.onload = showBooks;
+req.send(null);
+
+function showBooks() {
+  var books = req.responseXML.getElementsByTagName("book");
+  
+
+  for (var i = 0, book; book = books[i]; i++) {
+    var a = document.createElement("a");
+    a.innerText = book.getAttribute("name");
+    a.href = book.getAttribute("link");
+    document.body.appendChild(a);
+    document.body.appendChild(document.createElement("br"));
+  }
+  
+}
+</script>
+</body>

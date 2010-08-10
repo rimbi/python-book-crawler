@@ -1,0 +1,17 @@
+(dp1
+S'output'
+p2
+S''
+sS'layer'
+p3
+S'/home/cem/web2py/applications/myapp/views/default/index.xml'
+p4
+sS'code'
+p5
+S"response.write('<books>\\n',escape=False)\nfor book in books\nresponse.write('\\n<book>\\n<name>\\n',escape=False)\nresponse.write(book.name)\nresponse.write('\\n</name>\\n</book>\\n',escape=False)\npass\nresponse.write('\\n</books>\\n',escape=False)"
+p6
+sS'traceback'
+p7
+S'Traceback (most recent call last):\n  File "/home/cem/web2py/gluon/restricted.py", line 176, in restricted\n    ccode = compile2(code,layer)\n  File "/home/cem/web2py/gluon/restricted.py", line 163, in compile2\n    return compile(code.rstrip().replace(\'\\r\\n\',\'\\n\')+\'\\n\', layer, \'exec\')\n  File "/home/cem/web2py/applications/myapp/views/default/index.xml", line 2\n    for book in books\n                    ^\nSyntaxError: invalid syntax\n'
+p8
+s.

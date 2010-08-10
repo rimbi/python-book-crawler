@@ -1,0 +1,17 @@
+(dp1
+S'output'
+p2
+S''
+sS'layer'
+p3
+S'/home/cem/web2py/applications/myapp/controllers/default.py'
+p4
+sS'code'
+p5
+S'# -*- coding: utf-8 -*- \n\n#########################################################################\n## This is a samples controller\n## - index is the default action of any application\n## - user is required for authentication and authorization\n## - download is for downloading files uploaded in the db (does streaming)\n## - call exposes all registered services (none by default)\n#########################################################################  \n\ndef index():\n    books = db(db.books.name.like(u\'%bilgi%\')).select(orderby=db.books.name)\n    return dict(books=books)\n\ndef query():\n    query_string = (unicode(request.vars.query_string))\n    expressions = {\n        "name"      : db.books.name.like(query_string),\n        "author"    : db.books.author.like(query_string),\n        "publisher" : db.books.publisher.like(query_string),\n        "isbn"      : db.books.isbn == int(query_string),\n    }\n    books = db(expressions[request.vars.column_name]).select(orderby=db.books.price)\n    return dict(books=books)\n\ndef first():\n    form = FORM(INPUT(_name=\'book_name\', requires=IS_NOT_EMPTY()),\n              INPUT(_type=\'submit\'))\n    if form.accepts(request.vars, session):\n        session.book_name = form.vars.book_name\n        redirect(URL(f=\'second\'))\n    return dict(form=form)\n    \ndef user():\n    """\n    exposes:\n    http://..../[app]/default/user/login \n    http://..../[app]/default/user/logout\n    http://..../[app]/default/user/register\n    http://..../[app]/default/user/profile\n    http://..../[app]/default/user/retrieve_password\n    http://..../[app]/default/user/change_password\n    use @auth.requires_login()\n        @auth.requires_membership(\'group name\')\n        @auth.requires_permission(\'read\',\'table name\',record_id)\n    to decorate functions that need access control\n    """\n    return dict(form=auth())\n\n\ndef download():\n    """\n    allows downloading of uploaded files\n    http://..../[app]/default/download/[filename]\n    """\n    return response.download(request,db)\n\n\ndef call():\n    """\n    exposes services. for example:\n    http://..../[app]/default/call/jsonrpc\n    decorate with @services.jsonrpc the functions to expose\n    supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv\n    """\n    session.forget()\n    return service()\n\nresponse._vars=response._caller(query)\n'
+p6
+sS'traceback'
+p7
+S'Traceback (most recent call last):\n  File "/home/cem/web2py/gluon/restricted.py", line 178, in restricted\n    exec ccode in environment\n  File "/home/cem/web2py/applications/myapp/controllers/default.py", line 69, in <module>\n  File "/home/cem/web2py/gluon/globals.py", line 96, in <lambda>\n    self._caller = lambda f: f()\n  File "/home/cem/web2py/applications/myapp/controllers/default.py", line 21, in query\n    "isbn"      : db.books.isbn == int(query_string),\nValueError: invalid literal for int() with base 10: \'bilgi\'\n'
+p8
+s.

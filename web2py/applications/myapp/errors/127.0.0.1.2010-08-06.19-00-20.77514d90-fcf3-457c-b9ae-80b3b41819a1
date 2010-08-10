@@ -1,0 +1,17 @@
+(dp1
+S'output'
+p2
+S''
+sS'layer'
+p3
+S'/home/cem/web2py/applications/myapp/views/default/query.xml'
+p4
+sS'code'
+p5
+S'response.write(\'<books>\\n\',escape=False)\nfor book in books:\n    response.write(\'\\n<book name="\',escape=False)\n    response.write(book.name)\n    response.write(\'" author="\',escape=False)\n    response.write(book.author)\n    response.write(\'" publisher="\',escape=False)\n    response.write(book.publisher)\n    response.write(\'" link="\',escape=False)\n    response.write(book.link)\n    response.write(\'" isbn="\',escape=False)\n    response.write(book.isbn)\n    response.write(\'" price="\',escape=False)\n    response.write(book.price)\n    response.write(\'"/>\\n\',escape=False)\n    pass\nresponse.write(\'\\n</books>\\n\',escape=False)'
+p6
+sS'traceback'
+p7
+S'Traceback (most recent call last):\n  File "/home/cem/web2py/gluon/restricted.py", line 178, in restricted\n    exec ccode in environment\n  File "/home/cem/web2py/applications/myapp/views/default/query.xml", line 2, in <module>\n    {{for book in books:}}\nNameError: name \'books\' is not defined\n'
+p8
+s.

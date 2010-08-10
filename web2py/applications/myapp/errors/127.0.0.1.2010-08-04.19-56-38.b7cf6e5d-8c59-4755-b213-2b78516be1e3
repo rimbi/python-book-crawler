@@ -1,0 +1,17 @@
+(dp1
+S'output'
+p2
+S''
+sS'layer'
+p3
+S'/home/cem/web2py/applications/myapp/models/db.py'
+p4
+sS'code'
+p5
+S'# -*- coding: utf-8 -*- \ndb = DAL("sqlite://books.db")\n\ndb.get_table(\'books\',\n   Field(\'name\'),\n   Field(\'author\'),\n   Field(\'isbn\', \'integer\'),\n   Field(\'publisher\'),\n   Field(\'price\', \'double\'),\n   Field(\'link\'))\n'
+p6
+sS'traceback'
+p7
+S'Traceback (most recent call last):\n  File "/home/cem/web2py/gluon/restricted.py", line 178, in restricted\n    exec ccode in environment\n  File "/home/cem/web2py/applications/myapp/models/db.py", line 4, in <module>\n    db.get_table(\'books\',\n  File "/home/cem/web2py/gluon/sql.py", line 1329, in __getattr__\n    return dict.__getitem__(self,key)\nKeyError: \'get_table\'\n'
+p8
+s.
