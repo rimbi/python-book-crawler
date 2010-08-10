@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="content-language" content="en" />
+    <title>web2py: Enterprise Web Framework</title>
+    {{response.files.append(URL(r=request,c='static',f='styles.css'))}}
+    {{include 'web2py_ajax.html'}}
+  </head>
+  <body>
+    <div class="header">
+      <div class="menu layout">
+        <ul>
+          <li><a href="{{=URL(r=request,c='default',f='index')}}"><span>Overview of features</span>Home</a></li>
+          <li><a href="{{=URL(r=request,c='default',f='what')}}"><span>Read this first</span>About</a></li>
+          <li><a href="{{=URL(r=request,c='default',f='download')}}"><span>web2py is 100% free</span>Download</a></li>
+          <li><a href="http://web2py.com/book"><span>The full book online</span>Documentation</a></li>
+          <li><a href="{{=URL(r=request,c='default',f='who')}}"><span>Authors and contributors</span>Staff</a></li>
+          <li><a href="{{=URL(r=request,c='default',f='support')}}"><span>Affiliated companies</span>Support</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="layout">
+      <div class="content">
+        {{if response.flash:}}<div class="flash">{{=response.flash}}</div>{{pass}}
+        {{include}}
+      </div>
+    </div>
+    <div class="footer">Copyright &copy; 2007 - 2009 - powered by <a href="http://web2py.com">web2py</a></div>
+  </body>
+</html>

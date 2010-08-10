@@ -1,0 +1,14 @@
+(dp1
+S'email'
+p2
+S'CHAR(512)'
+p3
+sS'id'
+p4
+S'INTEGER PRIMARY KEY AUTOINCREMENT'
+p5
+sS'name'
+p6
+S'CHAR(512)'
+p7
+s.
