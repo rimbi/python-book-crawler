@@ -7,19 +7,6 @@
 from scrapy.item import Item, Field
 from scrapy.contrib.loader.processor import Join, TakeFirst
 
-class JobItem(Item):
-    # define the fields for your item here like:
-    title = Field(
-            default = u'http://www.yenibiris.com',
-    )
-    link = Field(
-            default = u'Başlık',
-    )
-    desc = Field(
-            default = u'İş tanımı',
-            output_processor=Join(),
-    )
-
 class BookItem(Item):
     # define the fields for your item here like:
     isbn = Field(
