@@ -27,6 +27,7 @@ class ImgeSpider(CrawlSpider):
 		l.add_xpath('price',    '//td[@class=\'price\']/font[@class=\'special\']/text()', u'Fiyatı: (.*)TL')
 		l.add_xpath('price',    '//td[@class=\'price\']/text()', u'(.*)TL')
 		l.add_value('link', response.url)
+		l.add_value('store', 1)
 		return l.load_item()
 
 SPIDER = ImgeSpider()

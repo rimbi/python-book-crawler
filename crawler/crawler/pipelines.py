@@ -17,6 +17,7 @@ class Book(object):
     publisher   = Unicode()
     link        = Unicode()
     price       = Float()
+    store       = Int()
 
 class DbExportPipeline(object):
 
@@ -43,6 +44,7 @@ class DbExportPipeline(object):
         book.publisher  = unicode(item['publisher'].strip())
         book.link       = unicode(item['link'].strip())
         book.price      = float(replace(item['price'], ',', '.'))
+        book.store      = item['store']
         self.store.add(book)
         return item
 

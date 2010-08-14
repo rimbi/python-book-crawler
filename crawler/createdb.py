@@ -23,7 +23,8 @@ books_table = Table('books', metadata,
 			Column('author', Unicode),
 			Column('publisher', Unicode),
 			Column('link', Unicode),
-			Column('price', Float))
+			Column('price', Float),
+			Column('store', Integer))
 
 metadata.create_all(engine)
 

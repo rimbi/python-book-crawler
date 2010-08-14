@@ -24,6 +24,7 @@ class KitapyurduSpider(CrawlSpider):
 		l.add_xpath('publisher','//span/a[contains(@href, "/yayinevi/")]/text()')
 		l.add_xpath('price',    '//td/text()', u'Kitapyurdu Fiyatı:(.*) TL\.')
 		l.add_value('link', response.url)
+		l.add_value('store', 3)
 		return l.load_item()
 
 SPIDER = KitapyurduSpider()

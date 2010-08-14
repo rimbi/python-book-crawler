@@ -33,4 +33,8 @@ class BookItem(Item):
             default = u'0 TL',
             output_processor = TakeFirst(),
     )
+    store = Field(
+            default = 0,
+            output_processor = TakeFirst(),
+    )
 

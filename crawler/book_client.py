@@ -28,6 +28,6 @@ book_service = xmlrpclib.ServerProxy('http://localhost:5555')
 books = book_service.query_books(options.query_string, options.column_name)
 
 for entry in books:
-	book = Bookee(entry["name"], entry["isbn"], entry["author"], entry["publisher"], entry["link"], entry["price"])
+	book = Bookee(entry["name"], entry["isbn"], entry["author"], entry["publisher"], entry["link"], entry["price"], entry["store"])
 	print "---------------------"
-	print "%s\n %s\n %s\n %s\n %s\n %f\n" % (book.name, book.author, book.publisher, book.link, book.isbn, book.price)
+	print "%s\n %s\n %s\n %s\n %s\n %f\n %d\n" % (book.name, book.author, book.publisher, book.link, book.isbn, book.price, book.store)

@@ -31,7 +31,8 @@ books_table = Table('books', metadata,
 			Column('author', Unicode),
 			Column('publisher', Unicode),
 			Column('link', Unicode),
-			Column('price', Float))
+			Column('price', Float),
+			Column('store', Integer))
 
 mapper(Book, books_table)
 Session = sessionmaker(bind=engine)
@@ -50,7 +51,7 @@ def query_books(query_string, column_name):
 	
 	for book in session.query(Book).filter(expressions[column_name]).order_by(Book.price):
 		print "---------------------"
-		print "%s\n %s\n %s\n %s\n %d\n %f\n" % (book.name, book.author, book.publisher, book.link, book.isbn, book.price)
+		print "%s\n %s\n %s\n %s\n %d\n %f\n %d\n" % (book.name, book.author, book.publisher, book.link, book.isbn, book.price, book.store)
 		
 	return [book.to_bookee() for book in session.query(Book).filter(expressions[column_name]).order_by(Book.price)]
 

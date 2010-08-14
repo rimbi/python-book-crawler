@@ -14,16 +14,17 @@ from sqlalchemy.orm import mapper, sessionmaker
 from optparse import OptionParser
 
 class Book(object):
-	def __init__(self, name, isbn, author, publisher, link, price):
+	def __init__(self, name, isbn, author, publisher, link, price, store):
 		self.name = name
 		self.isbn = isbn
 		self.author = author
 		self.publisher = publisher
 		self.link = link
 		self.price = price
+        self.store = store
 
 	def __repr__(self):
-		return u"<Book('%s', '%s', '%s', '%s', '%f')>" % (self.name, self.author, self.publisher, self.link, self.price)
+		return u"<Book('%s', '%s', '%s', '%s', '%f' '%d')>" % (self.name, self.author, self.publisher, self.link, self.price, self.store)
 
 
 parser=OptionParser()
@@ -42,14 +43,14 @@ books_table = Table('books', metadata,
 			Column('author', Unicode),
 			Column('publisher', Unicode),
 			Column('link', Unicode),
-			Column('price', Float))
+			Column('price', Float),
+			Column('store', Integer))
 
 mapper(Book, books_table)
 Session = sessionmaker(bind=engine)
 session = Session()
 
 query=unicode(options.query_string, encoding="utf_8")
-#if (options.column_name == "isbn")
 expressions = {}
 expressions = { "name"      : Book.name.like(u"%" + query + u"%"),
                 "author"    : Book.author.like(u"%" + query + u"%"),
@@ -62,4 +63,4 @@ except ValueError:
 
 for book in session.query(Book).filter(expressions[options.column_name]).order_by(Book.price):
 	print "---------------------"
-	print "%s\n %s\n %s\n %s\n %d\n %f\n" % (book.name, book.author, book.publisher, book.link, book.isbn, book.price)
+	print "%s\n %s\n %s\n %s\n %d\n %f\n %d\n" % (book.name, book.author, book.publisher, book.link, book.isbn, book.price, book.store)
