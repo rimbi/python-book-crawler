@@ -5,7 +5,7 @@ import re
 from scrapy.selector import HtmlXPathSelector
 from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 from scrapy.contrib.spiders import CrawlSpider, Rule
-from jobadcrawler.items import BookItem
+from crawler.items import BookItem
 from scrapy.contrib.loader import XPathItemLoader
 
 class KitapyurduSpider(CrawlSpider):
