@@ -20,9 +20,8 @@ def query():
         "name"      : db.books.name.like(like_string),
         "author"    : db.books.author.like(like_string),
         "publisher" : db.books.publisher.like(like_string),
+        "isbn"      :  db.books.isbn == query_string,
     }
-    if (column_name == "isbn"):
-        expressions["isbn"] = db.books.isbn == int(query_string)
 
     books = db(expressions[request.vars.column_name]).select(orderby=db.books.price)
     return dict(books=books)

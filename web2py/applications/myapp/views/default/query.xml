@@ -1,5 +1,5 @@
 <books>
 {{for book in books:}}
-<book name="{{=book.name}}" author="{{=book.author}}" publisher="{{=book.publisher}}" link="{{=book.link}}" isbn="{{=book.isbn}}" price="{{=book.price}}"/>
+<book name="{{=book.name}}" author="{{=book.author}}" publisher="{{=book.publisher}}" link="{{=book.link}}" isbn="{{=book.isbn}}" store="{{=book.store}}" price="{{=book.price}}"/>
 {{pass}}
 </books>
