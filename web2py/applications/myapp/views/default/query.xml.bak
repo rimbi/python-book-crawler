@@ -1,4 +1,0 @@
-
-{{extend 'layout.html'}}
-<h1>This is the default/query.xml template</h1>
-{{=BEAUTIFY(response._vars)}}

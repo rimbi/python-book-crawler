@@ -1,6 +1,0 @@
-<h1>Current Books</h1>
-<ul>
-{{for book in books:}}
-{{=book.name}}
-{{pass}}
-</ul>
