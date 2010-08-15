@@ -11,7 +11,7 @@ from string import replace
 class Book(object):
     __storm_table__ = "books"
     id = Int(primary=True)
-    isbn        = Int()
+    isbn        = Unicode()
     name        = Unicode()
     author      = Unicode()
     publisher   = Unicode()
@@ -38,7 +38,7 @@ class DbExportPipeline(object):
     
     def process_item(self, spider, item):
         book = Book()
-        book.isbn       = int(unicode(item['isbn'].strip()))
+        book.isbn       = item['isbn'].strip()
         book.name       = unicode(item['name'].strip())
         book.author     = unicode(item['author'].strip())
         book.publisher  = unicode(item['publisher'].strip())

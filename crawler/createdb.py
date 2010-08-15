@@ -18,7 +18,7 @@ metadata = MetaData()
 
 books_table = Table('books', metadata,
 			Column('id', Integer, primary_key=True),
-			Column('isbn', Integer),
+			Column('isbn', Unicode),
 			Column('name', Unicode),
 			Column('author', Unicode),
 			Column('publisher', Unicode),

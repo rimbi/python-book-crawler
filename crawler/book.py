@@ -12,12 +12,11 @@ class Bookee(object):
 		self.store = store
 
 	def __repr__(self):
-		return u"<Book('%s', '%s', '%s', '%s', '%f' '%d')>" % (self.name, self.author, self.publisher, self.link, self.price, self.store)
+		return u"<Book('%s', '%s', '%s', '%s', '%s', '%f' '%d')>" % (self.name, self.isbn, self.author, self.publisher, self.link, self.price, self.store)
 
 
 class Book(Bookee):
 	def to_bookee(self):
 		bokee = Bookee(self.name, self.isbn, self.author, self.publisher, self.link, self.price, self.store)
-		bokee.isbn = str(bokee.isbn)
 		return bokee
 

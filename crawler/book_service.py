@@ -26,7 +26,7 @@ metadata = MetaData()
 
 books_table = Table('books', metadata,
 			Column('id', Integer, primary_key=True),
-			Column('isbn', Integer),
+			Column('isbn', Unicode),
 			Column('name', Unicode),
 			Column('author', Unicode),
 			Column('publisher', Unicode),
@@ -43,15 +43,12 @@ def query_books(query_string, column_name):
 	expressions = { "name"	 	: Book.name.like(u"%" + query + u"%"),
 					"author"	: Book.author.like(u"%" + query + u"%"),
 					"publisher" : Book.publisher.like(u"%" + query + u"%"),
+                    "isbn"      : Book.isbn == query,
 	}
-	try:
-			expressions["isbn"] =  Book.isbn == int(query)
-	except ValueError:
-		pass
 	
 	for book in session.query(Book).filter(expressions[column_name]).order_by(Book.price):
 		print "---------------------"
-		print "%s\n %s\n %s\n %s\n %d\n %f\n %d\n" % (book.name, book.author, book.publisher, book.link, book.isbn, book.price, book.store)
+		print "%s\n %s\n %s\n %s\n %s\n %f\n %d\n" % (book.name, book.author, book.publisher, book.link, book.isbn, book.price, book.store)
 		
 	return [book.to_bookee() for book in session.query(Book).filter(expressions[column_name]).order_by(Book.price)]
 

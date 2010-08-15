@@ -24,7 +24,7 @@ class Book(object):
         self.store = store
 
 	def __repr__(self):
-		return u"<Book('%s', '%s', '%s', '%s', '%f' '%d')>" % (self.name, self.author, self.publisher, self.link, self.price, self.store)
+		return u"<Book('%s', '%s', '%s', '%s', '%s', '%f' '%d')>" % (self.name, self.isbn, self.author, self.publisher, self.link, self.price, self.store)
 
 
 parser=OptionParser()
@@ -38,7 +38,7 @@ metadata = MetaData()
 
 books_table = Table('books', metadata,
 			Column('id', Integer, primary_key=True),
-			Column('isbn', Integer),
+			Column('isbn', Unicode),
 			Column('name', Unicode),
 			Column('author', Unicode),
 			Column('publisher', Unicode),
@@ -51,16 +51,12 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 query=unicode(options.query_string, encoding="utf_8")
-expressions = {}
 expressions = { "name"      : Book.name.like(u"%" + query + u"%"),
                 "author"    : Book.author.like(u"%" + query + u"%"),
                 "publisher" : Book.publisher.like(u"%" + query + u"%"),
+                "isbn"      : Book.isbn == query,
               }
-try:
-              expressions["isbn"] =  Book.isbn == int(query)
-except ValueError:
-    pass
 
 for book in session.query(Book).filter(expressions[options.column_name]).order_by(Book.price):
 	print "---------------------"
-	print "%s\n %s\n %s\n %s\n %d\n %f\n %d\n" % (book.name, book.author, book.publisher, book.link, book.isbn, book.price, book.store)
+	print "%s\n %s\n %s\n %s\n %s\n %f\n %d\n" % (book.name, book.author, book.publisher, book.link, book.isbn, book.price, book.store)
