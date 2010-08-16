@@ -21,7 +21,7 @@ class Book(object):
 		self.publisher = publisher
 		self.link = link
 		self.price = price
-        self.store = store
+		self.store = store
 
 	def __repr__(self):
 		return u"<Book('%s', '%s', '%s', '%s', '%s', '%f' '%d')>" % (self.name, self.isbn, self.author, self.publisher, self.link, self.price, self.store)
