@@ -13,28 +13,28 @@ function  createRootElement(id) {
 }
 
 function showBooks(responseText) {
-  parser=new DOMParser();
-  responseXML=parser.parseFromString(responseText,"text/xml");
-  var books = responseXML.getElementsByTagName("book");
-
-//  alert(responseText);
-  notification = createRootElement("deneme");
-  for (var i = 0, book; (book = books[i]) && i < 5; i++) {
-    var a = document.createElement("a");
-    price = book.getAttribute("price");
-    name = book.getAttribute("name");
-    store = book.getAttribute("store");
-    link = book.getAttribute("link");
-    if (store == "1") {
-        storeName = "Imge.com.tr";
-    } else if (store == "2") {
-        storeName = "Idefix.com";
-    } else if (store == "3") {
-        storeName = "Kitapyurdu.com";
+    parser=new DOMParser();
+    responseXML=parser.parseFromString(responseText,"text/xml");
+    var books = responseXML.getElementsByTagName("book");
+    
+    //alert(responseText);
+    book = books[0];
+    if (book) {
+        notification = createRootElement("deneme");
+        var a = document.createElement("a");
+        price = book.getAttribute("price");
+        name = book.getAttribute("name");
+        store = book.getAttribute("store");
+        link = book.getAttribute("link");
+        if (store == "1") {
+            storeName = "Imge.com.tr";
+        } else if (store == "2") {
+            storeName = "Idefix.com";
+        } else if (store == "3") {
+            storeName = "Kitapyurdu.com";
+        }
+        notification.innerHTML = "<p>Bu kitabı <b>" + price + "TL</b>'ye <b><a href='" + link + "'>" + storeName + "</a></b> sitesinden alabilirsiniz.</p>";
     }
-    notification.innerHTML = "<p>Bu kitabı <b>" + price + "TL</b>'ye <b><a href='" + link + "'>" + storeName + "</a></b> sitesinden alabilirsiniz.</p>";
-  }
-  
 }
 
 var re = /ISBN.*[0-9]{10}/g;
