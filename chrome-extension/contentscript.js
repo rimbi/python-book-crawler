@@ -33,7 +33,7 @@ function showBooks(responseText) {
         } else if (store == "3") {
             storeName = "Kitapyurdu.com";
         }
-        notification.innerHTML = "<p>Bu kitabı <b>" + price + "TL</b>'ye <b><a href='" + link + "'>" + storeName + "</a></b> sitesinden alabilirsiniz.</p>";
+        notification.innerHTML = "<p>Bu ürünü <b>" + price + " TL</b>'ye <b><a href='" + link + "'>" + storeName + "</a></b> sitesinden alabilirsiniz.</p>";
     }
 }
 
