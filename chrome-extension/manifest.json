@@ -17,7 +17,8 @@
 
   "content_scripts": [
       {
-          "matches": ["http://www.kitapyurdu.com/*", "http://www.idefix.com/*", "http://www.imge.com.tr/*"],
+          "matches": ["http://www.kitapyurdu.com/*", "http://www.idefix.com/*", 
+                      "http://www.imge.com.tr/*", "http://www.pandora.com.tr/*"],
           "js" : ["contentscript.js"]
       }
   ]
