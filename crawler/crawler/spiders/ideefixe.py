@@ -13,7 +13,8 @@ class IdefixSpider(CrawlSpider):
     start_urls = ['http://www.idefix.com/']
 
     rules = (
-        Rule(SgmlLinkExtractor(allow=(r'/kitap/', )), 'parse_item', follow=True),
+        Rule(SgmlLinkExtractor(allow=(r'/kitap/.*/tanim\.asp\?sid=', ), unique=True), 'parse_item', follow=True),
+        Rule(SgmlLinkExtractor(allow=(r'/kitap/.*', ), unique=True), ),
     )
 
     def parse_item(self, response):
