@@ -40,7 +40,7 @@ function showBooks(responseText) {
 	}
 }
 
-var re = /ISBN[: ]*([0-9\\-]*)/g;
+var re = /ISBN[:\s]*([0-9\\-]*)/g;
 rawISBN = document.body.innerText.match(re)[0];
 isbn = rawISBN.replace(/-/g, "").slice(-10)
 //alert(isbn);
