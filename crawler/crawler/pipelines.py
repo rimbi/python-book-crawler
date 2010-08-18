@@ -38,7 +38,7 @@ class DbExportPipeline(object):
 	
 	def process_item(self, spider, item):
 		book = Book()
-		book.isbn = item['isbn'].strip()
+		book.isbn = item['isbn'].strip().replace("-", "")
 		if len(book.isbn) == 13:
 			book.isbn = book.isbn[-10:]
 		book.name	   	= unicode(item['name'].strip())

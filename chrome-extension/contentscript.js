@@ -40,8 +40,9 @@ function showBooks(responseText) {
 	}
 }
 
-var re = /ISBN.*[0-9]{10}/g;
-isbn = document.body.innerHTML.match(re)[0].slice(-10)
+var re = /ISBN[: ]*([0-9\\-]*)/g;
+rawISBN = document.body.innerText.match(re)[0];
+isbn = rawISBN.replace(/-/g, "").slice(-10)
 //alert(isbn);
 chrome.extension.sendRequest({'action' : 'fetchBooks', 'selectedText' : isbn}, showBooks);
 
