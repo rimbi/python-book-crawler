@@ -13,7 +13,7 @@ class ImgeSpider(CrawlSpider):
     start_urls = ['http://www.imge.com.tr/']
 
     rules = (
-        Rule(SgmlLinkExtractor(allow=(r'product_info', )), 'parse_item', follow=True),
+        Rule(SgmlLinkExtractor(allow=(r'product_info', ), unique=True), 'parse_item', follow=True),
     )
 
     def parse_item(self, response):

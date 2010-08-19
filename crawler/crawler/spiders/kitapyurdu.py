@@ -13,7 +13,7 @@ class KitapyurduSpider(CrawlSpider):
     start_urls = ['http://www.kitapyurdu.com/']
 
     rules = (
-        Rule(SgmlLinkExtractor(allow=(r'kitap/', ), deny=(r'changeCurrency', )), 'parse_item', follow=True),
+        Rule(SgmlLinkExtractor(allow=(r'kitap/', ), deny=(r'changeCurrency', ), unique=True), 'parse_item', follow=True),
     )
 
     def parse_item(self, response):
