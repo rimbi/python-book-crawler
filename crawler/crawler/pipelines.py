@@ -20,7 +20,7 @@ class Book(object):
 	store	   	= Int()
 
 class DbExportPipeline(object):
-
+	i = 0
 	def __init__(self):
 		dispatcher.connect(self.spider_opened, signals.spider_opened)
 		dispatcher.connect(self.spider_closed, signals.spider_closed)
@@ -29,13 +29,13 @@ class DbExportPipeline(object):
 	def spider_opened(self, spider):
 		db = create_database("sqlite:///books.db")
 		self.store = Store(db)
-			
-	def spider_closed(self, spider):
-		self.store.flush()
-		self.store.commit()
-		self.store.close()
+		DbExportPipeline.i += 1
 
-	
+	def spider_closed(self, spider):
+		DbExportPipeline.i -= 1
+		if DbExportPipeline.i == 0:
+			self.store.close()
+
 	def process_item(self, spider, item):
 		book = Book()
 		book.isbn = item['isbn'].strip().replace("-", "")
@@ -48,5 +48,7 @@ class DbExportPipeline(object):
 		book.price	  	= float(replace(item['price'], ',', '.'))
 		book.store	  	= item['store']
 		self.store.add(book)
+		self.store.flush()
+		self.store.commit()
 		return item
 
