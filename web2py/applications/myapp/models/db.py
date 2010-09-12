@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*- 
-db = DAL("sqlite://books.db")
+db = DAL("mysql://root:123456@localhost/bookcrawler")
 
 db.define_table('books',
    Field('name'),
