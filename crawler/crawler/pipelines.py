@@ -7,7 +7,7 @@ from scrapy.xlib.pydispatch import dispatcher
 from scrapy.core import signals
 from string import replace
 from sqlalchemy import create_engine
-from sqlalchemy import Table, Column, Integer, Float, Unicode, MetaData, ForeignKey, or_, DECIMAL
+from sqlalchemy import Table, Column, Integer, Float, Unicode, MetaData, and_
 from sqlalchemy.orm import mapper, sessionmaker
 
 class Book(object):
@@ -63,8 +63,16 @@ class DbExportPipeline(object):
 		book_link	   	= unicode(item['link'].strip())
 		book_price	  	= float(replace(item['price'], ',', '.'))
 		book_store	  	= item['store']
-		book = Book(book_name, book_isbn, book_author, book_publisher, book_link, book_price, book_store)
-		self.session.add(book)
+		book = self.session.query(Book).filter(and_(Book.isbn == book_isbn, Book.store == book_store)).first()
+		if book is None:
+			book = Book(book_name, book_isbn, book_author, book_publisher, book_link, book_price, book_store)
+			self.session.add(book)
+		else:
+			book.price = book_price
+			book.name = book_name
+			book.author = book_author
+			book.publisher = book_publisher
+			book.link = book_link
 		self.session.flush()
 		self.session.commit()
 		return item
