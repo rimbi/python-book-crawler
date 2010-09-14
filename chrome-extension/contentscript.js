@@ -30,11 +30,17 @@ function showBooks(responseText) {
 		name = book.getAttribute("name");
 		store = book.getAttribute("store");
 		if (store == "1") {
-			storeName = "Imge.com.tr";
+			storeName = "İmge.com.tr";
 		} else if (store == "2") {
-			storeName = "Idefix.com";
+			storeName = "İdefix.com";
 		} else if (store == "3") {
 			storeName = "Kitapyurdu.com";
+		} else if (store == "4") {
+			storeName = "Pandora.com.tr";
+		} else if (store == "5") {
+			storeName = "Netkitap.com";
+		} else if (store == "6") {
+			storeName = "İlknokta.com";
 		}
 		notification.innerHTML = "<p>Bu ürünü <b>" + price + " TL</b>'ye <b><a href='" + link + "'>" + storeName + "</a></b> sitesinden alabilirsiniz.</p>";
 	}
