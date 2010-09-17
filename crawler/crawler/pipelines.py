@@ -9,6 +9,7 @@ from string import replace
 from sqlalchemy import create_engine
 from sqlalchemy import Table, Column, Integer, Float, Unicode, MetaData, and_
 from sqlalchemy.orm import mapper, sessionmaker
+from database_config import DatabaseConfig
 
 class Book(object):
 	def __init__(self, name, isbn, author, publisher, link, price, store):
@@ -43,9 +44,10 @@ class DbExportPipeline(object):
 		dispatcher.connect(self.spider_opened, signals.spider_opened)
 		dispatcher.connect(self.spider_closed, signals.spider_closed)
 		self.session = None
+		self.database_dialect = DatabaseConfig().get_dialect()
 
 	def spider_opened(self, spider):
-		self.session = sessionmaker(bind=create_engine('mysql://root:123456@localhost/bookcrawler', echo=True))()
+		self.session = sessionmaker(bind=create_engine(self.database_dialect, echo=True))()
 		DbExportPipeline.i += 1
 
 	def spider_closed(self, spider):
