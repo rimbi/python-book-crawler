@@ -1,4 +1,5 @@
 from ConfigParser import SafeConfigParser
+from sys_utils import FindRootPath
 
 class DatabaseConfig(object):
     """
@@ -16,7 +17,8 @@ class DatabaseConfig(object):
 
         self.configfile = cfg
         self.config = SafeConfigParser({'username':'root', 'password':'', 'host':'localhost', 'database':'bookcrawler'})
-        self.config.read(self.configfile)
+        self.configpath = FindRootPath() + "/settings/"
+        self.config.read(self.configpath + self.configfile)
         self.username = self.config.get(self.dbtype, 'username')
         self.password = self.config.get(self.dbtype, 'password')
         self.host = self.config.get(self.dbtype, 'host')
