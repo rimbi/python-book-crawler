@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*- 
-db = DAL("mysql://root:123456@localhost/bookcrawler")
+from database_config import DatabaseConfig
+
+db = DAL(DatabaseConfig().get_dialect())
 
 db.define_table('books',
    Field('name'),
