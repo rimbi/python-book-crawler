@@ -1,0 +1,8 @@
+content     kitapsever    chrome/content/
+content     kitapsever    chrome/content/ contentaccessible=yes
+overlay chrome://browser/content/browser.xul chrome://kitapsever/content/browser.xul
+
+locale	kitapsever	en-US	locale/en-US/
+
+skin	kitapsever	classic/1.0	skin/
+style	chrome://global/content/customizeToolbar.xul	chrome://kitapsever/skin/skin.
