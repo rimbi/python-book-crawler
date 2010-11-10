@@ -16,7 +16,7 @@ class DatabaseConfig(object):
             print "Unsupported database type : '" + self.dbtype + "'"
 
         self.configfile = cfg
-        self.config = SafeConfigParser({'username':'root', 'password':'', 'host':'localhost', 'database':'bookcrawler'})
+        self.config = SafeConfigParser({'username':'root', 'password':'', 'host':'localhost', 'database':'kitapsever'})
         self.configpath = FindRootPath() + "/settings/"
         self.config.read(self.configpath + self.configfile)
         self.username = self.config.get(self.dbtype, 'username')
