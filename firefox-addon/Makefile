@@ -3,7 +3,7 @@
 DIRECTORY = KitapSever
 ZIP = $(shell which zip)
 
-all: kitapsever.xpi
+all: clean kitapsever.xpi
 
 kitapsever.xpi:
 	cd $(DIRECTORY); \
