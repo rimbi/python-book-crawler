@@ -10,3 +10,9 @@
 .link-target-finder-selected {
 	outline: 2px solid red !important;
 }
+
+notification[value='kitapsever-notification'] {
+	color : black;
+	background-color: lightgray;
+}
+
