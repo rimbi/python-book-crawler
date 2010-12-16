@@ -11,12 +11,27 @@ function HTMLParser(aHTMLString){
 	return body;
 };
 
+//
+// notify()
+// This function notifies the user about available books with using NotificationBox.
+// Extra work here is done to make a link in NotificationBox. Naturally NotificationBox does not
+// allow you to change string format. We do "Anonymous Content" trick here, in order to do that.
+//
 function notify(bookList) {
+	var nb = gBrowser.getNotificationBox();
+	var notification = nb.appendNotification("", 'kitapsever-notification');
+	var messageText = document.getAnonymousElementByAttribute(notification, "anonid", "messageText");
+	var fragment = document.createDocumentFragment();
+	var link = new Array(bookList.length);
+
 	var message = "";
+
+	fragment.appendChild(document.createTextNode("Bu kitabi "));
 	for (var i = 0, book; book = bookList[i]; i++) {
 		var bookStore = book.getAttribute("store");
 		var storeName;
-		var price = book.getAttribute("price");
+		var bookPrice = book.getAttribute("price");
+		var bookLink = book.getAttribute("link");
 		if (bookStore == "1") {
 			storeName = "imge.com.tr";
 		} else if (bookStore == "2") {
@@ -30,21 +45,29 @@ function notify(bookList) {
 		} else if (bookStore == "6") {
 			storeName = "ilknokta.com";
 		}
-		if (i > 0) {
-			message = message + ", ";
-		} else if (i == bookList.length) {
-			message = message + " ";
+
+		link[i] = document.createElementNS("http://www.w3.org/1999/xhtml", "link");
+		link[i].setAttribute("href", bookLink);
+		link[i].appendChild(document.createTextNode(storeName + " (" + bookPrice + " TL)"));
+		fragment.appendChild(link[i]);
+
+		if (i == (bookList.length - 1)) {
+			fragment.appendChild(document.createTextNode(" "));
+		} else {
+			fragment.appendChild(document.createTextNode(", "));
 		}
-		message = message + storeName + " (" + price + " TL)";
 	}
 	if (bookList.length == 1) {
-		message = message + "sitesinden ";
+		message = " sitesinden ";
 	} else {
-		message = message + "sitelerinden ";
+		message = " sitelerinden ";
 	}
 	message = message + "satin alabilirsiniz!";
-	var nb = gBrowser.getNotificationBox();
-	nb.appendNotification(message, 'kitapsever-notification');
+	fragment.appendChild(document.createTextNode(message));
+
+	messageText.removeChild(messageText.firstChild);
+	messageText.appendChild(fragment);
+
 };
 
 var KitapSever = function () {
