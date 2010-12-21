@@ -47,8 +47,11 @@ function notify(bookList) {
 		}
 
 		link[i] = document.createElementNS("http://www.w3.org/1999/xhtml", "link");
-		link[i].setAttribute("href", bookLink);
-		link[i].appendChild(document.createTextNode(storeName + " (" + bookPrice + " TL)"));
+		link[i].setAttribute("target", "_blank");
+		link[i].href = bookLink;
+		linkTextArea = document.createElementNS("http://www.w3.org/1999/xhtml", "u");
+		linkTextArea.innerHTML = "<b>" + storeName + " (" + bookPrice + " TL)" + "</b>";
+		link[i].appendChild(linkTextArea);
 		fragment.appendChild(link[i]);
 
 		if (i == (bookList.length - 1)) {
