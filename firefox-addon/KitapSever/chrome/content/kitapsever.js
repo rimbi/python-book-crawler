@@ -19,7 +19,7 @@ function HTMLParser(aHTMLString){
 //
 function notify(bookList) {
 	var nb = gBrowser.getNotificationBox();
-	var notification = nb.appendNotification("", 'kitapsever-notification');
+	var notification = nb.appendNotification('', 'kitapsever-notification', 'chrome://KitapSever/skin/kitapsever.png');
 	var messageText = document.getAnonymousElementByAttribute(notification, "anonid", "messageText");
 	var fragment = document.createDocumentFragment();
 	var link = new Array(bookList.length);
@@ -79,9 +79,9 @@ var KitapSever = function () {
 		init : function () {
 			gBrowser.addEventListener("load", function () {
 				var autoRun = prefManager.getBoolPref("extensions.kitapsever.autorun");
-				if (autoRun) {
-					KitapSever.run();
-				}
+//				if (autoRun) {
+//					KitapSever.run();
+//				}
 			}, false);
 		},
 
