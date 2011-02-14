@@ -10,7 +10,6 @@ from string import replace
 ITEM_SEPERATOR = ";"
 
 class FileExportPipeline(object):
-	i = 0
 	def __init__(self):
 		dispatcher.connect(self.spider_opened, signals.spider_opened)
 		dispatcher.connect(self.spider_closed, signals.spider_closed)
