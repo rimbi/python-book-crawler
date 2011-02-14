@@ -6,6 +6,8 @@
 from scrapy.xlib.pydispatch import dispatcher
 from scrapy.core import signals
 from string import replace
+from crawler.settings import BOOK_SERVICE_ADDRESS
+import urllib2
 
 ITEM_SEPERATOR = ";"
 
@@ -22,13 +24,18 @@ class FileExportPipeline(object):
 		self.out_file.close()
 
 	def process_item(self, spider, item):
-		book_isbn = item['isbn'].strip().replace("-", "")
-		if len(book_isbn) == 13:
-			book_isbn = book_isbn[-10:]
-		line = book_isbn + ITEM_SEPERATOR
-		line = line + item['link'].strip() + ITEM_SEPERATOR
-		line = line + replace(item['price'], ',', '.') + ITEM_SEPERATOR
-		line = line + str(item['store']) + "\n"
+		isbn = item['isbn'].strip().replace("-", "")
+		if len(isbn) == 13:
+			isbn = isbn[-10:]
+		link  = item['link'].strip()
+		price = replace(item['price'], ',', '.')
+		store = str(item['store'])
+		line  = isbn + ITEM_SEPERATOR
+		line  = line + link + ITEM_SEPERATOR
+		line  = line + price + ITEM_SEPERATOR
+		line  = line + store + "\n"
 		self.out_file.write(line)
+		service_link = BOOK_SERVICE_ADDRESS + '?isbn=' + isbn + '&price=' + price + '&store=' + store + '&link=' + link
+		urllib2.urlopen(service_link)
 		return item
 

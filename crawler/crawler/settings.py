@@ -21,3 +21,5 @@ USER_AGENT = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13
 ITEM_PIPELINES = ['crawler.pipelines.FileExportPipeline']
 CONCURRENT_REQUESTS_PER_SPIDER = 2
 DOWNLOAD_DELAY = 1
+BOOK_SERVICE_ADDRESS = 'http://rimbiskitapsever.appspot.com/book'
+#BOOK_SERVICE_ADDRESS = 'http://localhost:8080/book'
