@@ -13,7 +13,7 @@ class PandoraSpider(CrawlSpider):
     start_urls = ['http://www.pandora.com.tr/']
 
     rules = (
-        Rule(SgmlLinkExtractor(allow=(r'/urun\.aspx\?id=',), unique=True), 'parse_item', follow=True),
+        Rule(SgmlLinkExtractor(allow=(r'/urun/.*',), unique=True), 'parse_item', follow=True),
         Rule(SgmlLinkExtractor(allow=(r'/.*', ), unique=True)),
     )
 
