@@ -97,10 +97,9 @@ class BookQueryHandler(webapp.RequestHandler):
 
 class DatabaseCleanHandler(webapp.RequestHandler):
 	def get(self):
-		books = db.GqlQuery("SELECT * FROM Book ORDER BY price")
-		for book in books:
-			book.delete()
-		self.redirect('/serve')
+		books = Book.gql("LIMIT 5000")
+		db.delete(books)
+		self.response.out.write("Number of remaining items is %d" % db.GqlQuery("SELECT * FROM Book").count())
 
 class UploadHandler(blobstore_handlers.BlobstoreUploadHandler):
 	def post(self):
