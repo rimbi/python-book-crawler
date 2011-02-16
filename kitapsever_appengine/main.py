@@ -29,7 +29,7 @@ class MainHandler(webapp.RequestHandler):
 
 class AllBooksQueryHandler(webapp.RequestHandler):
     def get(self):
-		books = db.GqlQuery("SELECT * FROM Book ORDER BY price ")
+		books = Book.gql("ORDER BY price ")
 
 		template_values = {
 			'books': books,
@@ -38,14 +38,13 @@ class AllBooksQueryHandler(webapp.RequestHandler):
 		path = os.path.join(os.path.dirname(__file__), 'results.xml')
 		self.response.out.write(template.render(path, template_values))
 
-class BookByISBNQueryHandler(webapp.RequestHandler):
+class FirstBookByISBNQueryHandler(webapp.RequestHandler):
     def get(self):
 		isbn  = self.request.get('isbn')
 
-		books = db.GqlQuery("SELECT * FROM Book "
-							"WHERE isbn = :1 "
-							"ORDER BY price "
-							"LIMIT 1", isbn)
+		books = Book.gql("WHERE isbn = :1 "
+						 "ORDER BY price "
+						 "LIMIT 1", isbn)
 
 		template_values = {
 			'books': books,
@@ -60,8 +59,7 @@ class BookQueryHandler(webapp.RequestHandler):
 		link  = self.request.get('link')
 		price = self.request.get('price')
 		store = self.request.get('store')
-		q = db.GqlQuery("SELECT * FROM Book "
-						"WHERE isbn = :1 AND store = :2", isbn, store)
+		q = Book.gql("WHERE isbn = :1 AND store = :2", isbn, int(store))
 		book = q.get()
 		if book is None:
 			book = Book()
@@ -71,10 +69,9 @@ class BookQueryHandler(webapp.RequestHandler):
 		book.store = int(store)
 		book.put()	
 
-		books = db.GqlQuery("SELECT * FROM Book "
-							"WHERE isbn = :1 "
-							"ORDER BY price "
-							"LIMIT 1", isbn)
+		books = Book.gql("WHERE isbn = :1 "
+						 "ORDER BY price "
+						 "LIMIT 1", isbn)
 
 		template_values = {
 			'books': books,
@@ -113,10 +110,9 @@ class ServeHandler(blobstore_handlers.BlobstoreDownloadHandler):
 		link  = self.request.get('link')
 		price = self.request.get('price')
 		store = self.request.get('store')
-		books = db.GqlQuery("SELECT * FROM Book "
-							"WHERE isbn = :1 AND store = :2 "
-							"ORDER BY price "
-							"LIMIT 1", isbn, store)
+		books = Book.gql("WHERE isbn = :1 AND store = :2 "
+						 "ORDER BY price "
+						 "LIMIT 1", isbn, int(store))
 
 		template_values = {
 			'books': books,
