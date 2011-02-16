@@ -53,6 +53,21 @@ class FirstBookByISBNQueryHandler(webapp.RequestHandler):
 		path = os.path.join(os.path.dirname(__file__), 'results.xml')
 		self.response.out.write(template.render(path, template_values))
 
+class AllBooksByISBNQueryHandler(webapp.RequestHandler):
+    def get(self):
+		isbn  = self.request.get('isbn')
+
+		books = Book.gql("WHERE isbn = :1 "
+						 "ORDER BY price "
+						 , isbn)
+
+		template_values = {
+			'books': books,
+		}
+
+		path = os.path.join(os.path.dirname(__file__), 'results.html')
+		self.response.out.write(template.render(path, template_values))
+
 class BookQueryHandler(webapp.RequestHandler):
     def get(self):
 		isbn  = self.request.get('isbn')
@@ -128,7 +143,8 @@ def main():
 		 ('/serve', ServeHandler),
 		 ('/clean', DatabaseCleanHandler),
 		 ('/book', BookQueryHandler),
-		 ('/bookbyisbn', BookByISBNQueryHandler),
+		 ('/bookbyisbn', FirstBookByISBNQueryHandler),
+		 ('/booksbyisbn', AllBooksByISBNQueryHandler),
 		 ('/allbooks', AllBooksQueryHandler),
 		], debug=True)
 	run_wsgi_app(application)
