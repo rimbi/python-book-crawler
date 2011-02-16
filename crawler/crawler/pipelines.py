@@ -7,7 +7,7 @@ from scrapy.xlib.pydispatch import dispatcher
 from scrapy.core import signals
 from string import replace
 from crawler.settings import BOOK_SERVICE_ADDRESS
-import urllib2
+import urllib
 
 ITEM_SEPERATOR = ";"
 
@@ -23,8 +23,9 @@ class AppEngineExportPipeline(object):
 		line  = line + link + ITEM_SEPERATOR
 		line  = line + price + ITEM_SEPERATOR
 		line  = line + store + "\n"
-		service_link = BOOK_SERVICE_ADDRESS + '?isbn=' + isbn + '&price=' + price + '&store=' + store + '&link=' + link
-		urllib2.urlopen(service_link)
+		params = urllib.urlencode({'isbn': isbn, 'price': price, 'store': store, 'link': link})
+		f = urllib.urlopen(BOOK_SERVICE_ADDRESS + '?%s' % params)
+		f.close()
 		return item
 		
 class FileExportPipeline(object):
