@@ -11,6 +11,22 @@ import urllib2
 
 ITEM_SEPERATOR = ";"
 
+class AppEngineExportPipeline(object):
+	def process_item(self, spider, item):
+		isbn = item['isbn'].strip().replace("-", "")
+		if len(isbn) == 13:
+			isbn = isbn[-10:]
+		link  = item['link'].strip()
+		price = replace(item['price'], ',', '.')
+		store = str(item['store'])
+		line  = isbn + ITEM_SEPERATOR
+		line  = line + link + ITEM_SEPERATOR
+		line  = line + price + ITEM_SEPERATOR
+		line  = line + store + "\n"
+		service_link = BOOK_SERVICE_ADDRESS + '?isbn=' + isbn + '&price=' + price + '&store=' + store + '&link=' + link
+		urllib2.urlopen(service_link)
+		return item
+		
 class FileExportPipeline(object):
 	def __init__(self):
 		dispatcher.connect(self.spider_opened, signals.spider_opened)
@@ -35,7 +51,5 @@ class FileExportPipeline(object):
 		line  = line + price + ITEM_SEPERATOR
 		line  = line + store + "\n"
 		self.out_file.write(line)
-		service_link = BOOK_SERVICE_ADDRESS + '?isbn=' + isbn + '&price=' + price + '&store=' + store + '&link=' + link
-		urllib2.urlopen(service_link)
 		return item
 
