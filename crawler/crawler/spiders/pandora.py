@@ -19,10 +19,10 @@ class PandoraSpider(CrawlSpider):
 
     def parse_item(self, response):
 		l = XPathItemLoader(item=BookItem(), response=response)
-		l.add_xpath('name',     '//span[@id=\'ctl00_ContentPlaceHolderMainOrta_LabelAdi\']/text()')
-		l.add_xpath('isbn',     '//span[@id=\'ctl00_ContentPlaceHolderMainOrta_LabelIsbn\']/text()')
-		l.add_xpath('author',   '//span[@id=\'ctl00_ContentPlaceHolderMainOrta_LabelYazar\']/a/text()')
-		l.add_xpath('publisher','//a[@id=\'ctl00_ContentPlaceHolderMainOrta_HyperLinkYayinci\']/text()')
+		l.add_xpath('name',     '//span[@id="ContentPlaceHolderMainOrta_LabelAdi"]/text()')
+		l.add_xpath('isbn',     '//span[@id="ContentPlaceHolderMainOrta_LabelIsbn"]/text()')
+		l.add_xpath('author',   '//span[@id="ContentPlaceHolderMainOrta_LabelYazar"]/a/text()')
+		l.add_xpath('publisher','//a[@id="ContentPlaceHolderMainOrta_HyperLinkYayinci"]/text()')
 		l.add_xpath('price',    '//span[@class=\'fiyat\']/text()', u'(.*) TL')
 		l.add_value('link', response.url)
 		l.add_value('store', 4)
