@@ -14,8 +14,8 @@ ITEM_SEPERATOR = ";"
 class AppEngineExportPipeline(object):
 	def process_item(self, spider, item):
 		isbn = item['isbn'].strip().replace("-", "")
-		if len(isbn) == 13:
-			isbn = isbn[-10:]
+		if len(isbn) >= 10:
+			isbn = isbn[-10:-1]
 		link  = item['link'].strip()
 		price = replace(item['price'], ',', '.')
 		store = str(item['store'])
