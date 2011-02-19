@@ -84,16 +84,6 @@ class BookQueryHandler(webapp.RequestHandler):
 		book.store = int(store)
 		book.put()	
 
-		books = Book.gql("WHERE isbn = :1 "
-						 "ORDER BY price "
-						 "LIMIT 1", isbn)
-
-		template_values = {
-			'books': books,
-		}
-
-		path = os.path.join(os.path.dirname(__file__), 'results.xml')
-		self.response.out.write(template.render(path, template_values))
 
 class DatabaseCleanHandler(webapp.RequestHandler):
 	def get(self):
