@@ -2,7 +2,6 @@
 #
 
 import os
-import urllib
 
 from google.appengine.ext import blobstore
 from google.appengine.ext import webapp
@@ -11,6 +10,7 @@ from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext.webapp import template
 from google.appengine.ext import db
+from gaesessions import get_current_session
 
 class Book(db.Model):
     isbn = db.StringProperty()
@@ -85,6 +85,48 @@ class BookQueryHandler(webapp.RequestHandler):
 		book.put()	
 
 
+class SessionTerminator(webapp.RequestHandler):
+	def get(self):
+		session = get_current_session()
+		if session.is_active():
+			session.terminate()
+
+class AddToBasket(webapp.RequestHandler):
+	def get(self):
+		isbn  = self.request.get('isbn')
+		session = get_current_session()
+		if session.is_active():
+			session['count'] += 1
+		else:
+			session['count'] = 1
+		count = session['count']	
+		session['isbn%d' % count] = isbn
+		self.redirect('/listbasket')
+
+class ListBasket(webapp.RequestHandler):
+	def get(self):
+		session = get_current_session()
+		if session.is_active():
+			count = session['count']
+		else:
+			count = 0
+		self.response.out.write("Count = %d" % count)
+		prices = {}
+		for i in range(1, count+1):
+			key = 'isbn%d'%i
+			if session.has_key(key):
+				isbn = session[key]
+				self.response.out.write("<br>ISBN %d = %s" % (i, isbn))
+				books = Book.gql("WHERE isbn = :1", isbn)	
+				for book in books:
+					if prices.has_key(book.store):
+						prices[book.store] += book.price
+					else:
+						prices[book.store] = 0
+
+		for store, price in prices.items():
+			self.response.out.write("<br>store =  %d, price = %f" % (store, price))
+
 class DatabaseCleanHandler(webapp.RequestHandler):
 	def get(self):
 		books = Book.gql("LIMIT 5000")
@@ -135,6 +177,9 @@ def main():
 		 ('/bookbyisbn', FirstBookByISBNQueryHandler),
 		 ('/booksbyisbn', AllBooksByISBNQueryHandler),
 		 ('/allbooks', AllBooksQueryHandler),
+		 ('/terminatesession', SessionTerminator),
+		 ('/addtobasket', AddToBasket),
+		 ('/listbasket', ListBasket),
 		], debug=True)
 	run_wsgi_app(application)
 
