@@ -3,8 +3,9 @@
 </head>
 <body>
 <script type="text/javascript">
+var server_addr = "http://rimbiskitapsever.appspot.com"
 function sendServiceRequest(selectedText, callback) {
-    var serviceCall = "http://rimbiskitapsever.appspot.com/bookbyisbn?isbn=" + selectedText;
+    var serviceCall = server_addr + "/bookbyisbn?isbn=" + selectedText + "&url=" + url;
     var req = new XMLHttpRequest();
     req.open("GET", serviceCall, true);
     req.onload = showBooks;

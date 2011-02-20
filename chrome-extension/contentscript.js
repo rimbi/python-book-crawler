@@ -16,6 +16,9 @@ function  createRootElement(id) {
 	return root;
 }
 
+var options = "height=400,width=600,titlebar=no,status=no,toolbar=no,menubar=no,location=no,resizable=no,scrollbars=1";
+var server_addr = "http://rimbiskitapsever.appspot.com"
+var addToBasket_link = "<a href=\"javascript:window.open(\'" + server_addr + "/addtobasket?isbn=" + isbn + "\',\'_blank\',\'" + options + "\');\">Sepete At</a>";
 function showBooks(responseText) {
 	parser=new DOMParser();
 	responseXML=parser.parseFromString(responseText,"text/xml");
@@ -27,7 +30,7 @@ function showBooks(responseText) {
 		notification = createRootElement("deneme");
 		link = book.getAttribute("link");
 		if (link == document.URL) {
-			notification.innerHTML = "<p><b>En iyi fiyat :</b> Bu üründe en iyi fiyat bu sitede.</p>";
+			notification.innerHTML = "<p><b>En iyi fiyat :</b> Bu üründe en iyi fiyat bu sitede." + "&nbsp;&nbsp;&nbsp;&nbsp;" + addToBasket_link + "</p>";
 			return;
 		}
 		price = book.getAttribute("price");
@@ -46,7 +49,7 @@ function showBooks(responseText) {
 		} else if (store == "6") {
 			storeName = "İlknokta.com";
 		}
-		notification.innerHTML = "<p>Bu ürünü <b>" + price + " TL</b>'ye <b><a href='" + link + "'>" + storeName + "</a></b> sitesinden alabilirsiniz.</p>";
+		notification.innerHTML = "<p>Bu ürünü <b>" + price + " TL</b>'ye <b><a href='" + link + "'>" + storeName + "</a></b> sitesinden alabilirsiniz." + "&nbsp;&nbsp;&nbsp;&nbsp;" + addToBasket_link + "</p>";
 	}
 }
 
