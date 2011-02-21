@@ -5,7 +5,7 @@
 # http://doc.scrapy.org/topics/items.html
 
 from scrapy.item import Item, Field
-from scrapy.contrib.loader.processor import Join, TakeFirst
+from scrapy.contrib.loader.processor import Join, TakeFirst, Compose
 
 class BookItem(Item):
     # define the fields for your item here like:
@@ -32,6 +32,7 @@ class BookItem(Item):
     price = Field(
             default = u'0 TL',
             output_processor = TakeFirst(),
+            input_processor = Compose(lambda v: v[-1:]),
     )
     store = Field(
             default = 0,
