@@ -8,24 +8,30 @@ from scrapy.core import signals
 from string import replace
 from crawler.settings import BOOK_SERVICE_ADDRESS
 import urllib
+from scrapy.core.exceptions import DropItem
 
 ITEM_SEPERATOR = ";"
 
 class AppEngineExportPipeline(object):
 	def process_item(self, spider, item):
-		isbn = item['isbn'].strip().replace("-", "")
-		if len(isbn) >= 10:
-			isbn = isbn[-10:-1]
-		link  = item['link'].strip()
-		price = replace(item['price'], ',', '.')
-		store = str(item['store'])
-		line  = isbn + ITEM_SEPERATOR
-		line  = line + link + ITEM_SEPERATOR
-		line  = line + price + ITEM_SEPERATOR
-		line  = line + store + "\n"
-		params = urllib.urlencode({'isbn': isbn, 'price': price, 'store': store, 'link': link})
-		f = urllib.urlopen(BOOK_SERVICE_ADDRESS + '?%s' % params)
-		f.close()
+		try:
+			link  = item['link'].strip()
+			isbn = item['isbn'].strip().replace("-", "")
+			if len(isbn) >= 10:
+				isbn = isbn[-10:-1]
+			price = replace(item['price'], ',', '.')
+			store = str(item['store'])
+			line  = isbn + ITEM_SEPERATOR
+			line  = line + link + ITEM_SEPERATOR
+			line  = line + price + ITEM_SEPERATOR
+			line  = line + store + "\n"
+			params = urllib.urlencode({'isbn': isbn, 'price': price, 'store': store, 'link': link})
+			f = urllib.urlopen(BOOK_SERVICE_ADDRESS + '?%s' % params)
+			f.close()
+		except AttributeError:
+			print "Attribute error in parsing item at %s" % link
+			raise DropItem()
+
 		return item
 		
 class FileExportPipeline(object):
@@ -41,16 +47,21 @@ class FileExportPipeline(object):
 		self.out_file.close()
 
 	def process_item(self, spider, item):
-		isbn = item['isbn'].strip().replace("-", "")
-		if len(isbn) == 13:
-			isbn = isbn[-10:]
-		link  = item['link'].strip()
-		price = replace(item['price'], ',', '.')
-		store = str(item['store'])
-		line  = isbn + ITEM_SEPERATOR
-		line  = line + link + ITEM_SEPERATOR
-		line  = line + price + ITEM_SEPERATOR
-		line  = line + store + "\n"
-		self.out_file.write(line)
+		try:
+			link  = item['link'].strip()
+			isbn = item['isbn'].strip().replace("-", "")
+			if len(isbn) >= 10:
+				isbn = isbn[-10: -1]
+			price = replace(item['price'], ',', '.')
+			store = str(item['store'])
+			line  = isbn + ITEM_SEPERATOR
+			line  = line + link + ITEM_SEPERATOR
+			line  = line + price + ITEM_SEPERATOR
+			line  = line + store + "\n"
+			self.out_file.write(line)
+		except AttributeError:
+			print "Attribute error in parsing item at %s" % link
+			raise DropItem()
+
 		return item
 
