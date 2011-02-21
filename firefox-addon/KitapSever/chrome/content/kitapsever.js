@@ -97,6 +97,7 @@ var KitapSever = function () {
 
 			var req = new XMLHttpRequest();
 			req.open("GET", "http://rimbiskitapsever.appspot.com/bookbyisbn?isbn=" + bookIsbnNum, "true");
+			req.channel.loadFlags |= Components.interfaces.nsIRequest.LOAD_BYPASS_CACHE;
 			req.onload = function (asyncEvent) {
 				notify(req.responseText);
 			};
