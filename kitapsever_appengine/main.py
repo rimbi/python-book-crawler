@@ -116,16 +116,15 @@ class ListBasket(webapp.RequestHandler):
 			key = 'isbn%d'%i
 			if session.has_key(key):
 				isbn = session[key]
-				self.response.out.write("<br>ISBN %d = %s" % (i, isbn))
 				books = Book.gql("WHERE isbn = :1", isbn)	
+				prices[isbn] = {}
 				for book in books:
-					if prices.has_key(book.store):
-						prices[book.store] += book.price
-					else:
-						prices[book.store] = 0
+					prices[isbn][book.store] = book.price
 
-		for store, price in prices.items():
-			self.response.out.write("<br>store =  %d, price = %f" % (store, price))
+		for isbn, stores in prices.items():
+			self.response.out.write("<br>isbn =  %s" % isbn)
+			for store, price in stores.items():
+				self.response.out.write(" || store =  %d, price = %f" % (store, price))
 
 class DatabaseCleanHandler(webapp.RequestHandler):
 	def get(self):
