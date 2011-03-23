@@ -17,7 +17,10 @@ function HTMLParser(aHTMLString){
 // Extra work here is done to make a link in NotificationBox. Naturally NotificationBox does not
 // allow you to change string format. We do "Anonymous Content" trick here, in order to do that.
 //
-function notify(bookList) {
+function notify(responseText) {
+	parser=new DOMParser();
+	responseXML=parser.parseFromString(responseText,"text/xml");
+	var bookList = responseXML.getElementsByTagName("book");
 	var nb = gBrowser.getNotificationBox();
 	var notification = nb.appendNotification('', 'kitapsever-notification', 'chrome://KitapSever/skin/kitapsever.png');
 	var messageText = document.getAnonymousElementByAttribute(notification, "anonid", "messageText");
@@ -87,24 +90,16 @@ var KitapSever = function () {
 
 		run : function () {
 			var pageBody = content.document.documentElement;
-			var reIsbn = /ISBN[:\s]*([0-9\\-]*)/g; 
+			var reIsbn = /ISBN[:\s]*([X0-9\\-]*)/g; 
 			var bookIsbnRaw = pageBody.textContent.match(reIsbn)[0];
 			var bookIsbnNum = bookIsbnRaw.split(":")[1];
-			bookIsbnNum = bookIsbnNum.trim().slice(-10);
-			alert("ISBN No : '" + bookIsbnNum + "'");
+			bookIsbnNum = bookIsbnNum.trim().slice(-10, -1);
 
 			var req = new XMLHttpRequest();
-			req.open("GET", "http://127.0.0.1:8000/myapp/default/query.xml?column_name=isbn&query_string=" + bookIsbnNum, "true");
+			req.open("GET", "http://rimbiskitapsever.appspot.com/bookbyisbn?isbn=" + bookIsbnNum, "true");
 			req.channel.loadFlags |= Components.interfaces.nsIRequest.LOAD_BYPASS_CACHE;
-			req.onreadystatechange = function (asyncEvent) {
-				if (req.readyState == 4) {
-					if (req.status == 200) {
-						var books = req.responseXML.getElementsByTagName("book");
-						notify(books);
-					} else {
-						alert("Invalid response");
-					}
-				}
+			req.onload = function (asyncEvent) {
+				notify(req.responseText);
 			};
 			req.send(null);
 		}

@@ -6,76 +6,51 @@
 from scrapy.xlib.pydispatch import dispatcher
 from scrapy.core import signals
 from string import replace
-from sqlalchemy import create_engine
-from sqlalchemy import Table, Column, Integer, Float, Unicode, MetaData, and_
-from sqlalchemy.orm import mapper, sessionmaker
-from database_config import DatabaseConfig
+from crawler.settings import BOOK_SERVICE_ADDRESS
+import urllib
 
-class Book(object):
-	def __init__(self, name, isbn, author, publisher, link, price, store):
-		self.name = name
-		self.isbn = isbn
-		self.author = author
-		self.publisher = publisher
-		self.link = link
-		self.price = price
-		self.store = store
+ITEM_SEPERATOR = ";"
 
-	def __repr__(self):
-		return u"<Book('%s', '%s', '%s', '%s', '%s', '%f' '%d')>" % (self.name, self.isbn, self.author, self.publisher, self.link, self.price, self.store)
-
-metadata = MetaData()
-
-books_table = Table('books', metadata,
-			Column('id', Integer, primary_key=True),
-			Column('isbn', Unicode(255)),
-			Column('name', Unicode(255)),
-			Column('author', Unicode(255)),
-			Column('publisher', Unicode(255)),
-			Column('link', Unicode(255)),
-			Column('price', Float(precision=2)),
-			Column('store', Integer))
-
-mapper(Book, books_table)
-
-class DbExportPipeline(object):
-	i = 0
+class AppEngineExportPipeline(object):
+	def process_item(self, spider, item):
+		isbn = item['isbn'].strip().replace("-", "")
+		if len(isbn) >= 10:
+			isbn = isbn[-10:-1]
+		link  = item['link'].strip()
+		price = replace(item['price'], ',', '.')
+		store = str(item['store'])
+		line  = isbn + ITEM_SEPERATOR
+		line  = line + link + ITEM_SEPERATOR
+		line  = line + price + ITEM_SEPERATOR
+		line  = line + store + "\n"
+		params = urllib.urlencode({'isbn': isbn, 'price': price, 'store': store, 'link': link})
+		f = urllib.urlopen(BOOK_SERVICE_ADDRESS + '?%s' % params)
+		f.close()
+		return item
+		
+class FileExportPipeline(object):
 	def __init__(self):
 		dispatcher.connect(self.spider_opened, signals.spider_opened)
 		dispatcher.connect(self.spider_closed, signals.spider_closed)
-		self.session = None
-		self.database_dialect = DatabaseConfig().get_dialect()
+		self.out_file = None
 
 	def spider_opened(self, spider):
-		self.session = sessionmaker(bind=create_engine(self.database_dialect, echo=True))()
-		DbExportPipeline.i += 1
+		self.out_file = open(spider.domain_name + ".txt", "w")
 
 	def spider_closed(self, spider):
-		DbExportPipeline.i -= 1
-		if DbExportPipeline.i == 0:
-			self.session.close()
+		self.out_file.close()
 
 	def process_item(self, spider, item):
-		book_isbn = item['isbn'].strip().replace("-", "")
-		if len(book_isbn) == 13:
-			book_isbn = book_isbn[-10:]
-		book_name	   	= unicode(item['name'].strip())
-		book_author		= unicode(item['author'].strip())
-		book_publisher  	= unicode(item['publisher'].strip())
-		book_link	   	= unicode(item['link'].strip())
-		book_price	  	= float(replace(item['price'], ',', '.'))
-		book_store	  	= item['store']
-		book = self.session.query(Book).filter(and_(Book.isbn == book_isbn, Book.store == book_store)).first()
-		if book is None:
-			book = Book(book_name, book_isbn, book_author, book_publisher, book_link, book_price, book_store)
-			self.session.add(book)
-		else:
-			book.price = book_price
-			book.name = book_name
-			book.author = book_author
-			book.publisher = book_publisher
-			book.link = book_link
-		self.session.flush()
-		self.session.commit()
+		isbn = item['isbn'].strip().replace("-", "")
+		if len(isbn) == 13:
+			isbn = isbn[-10:]
+		link  = item['link'].strip()
+		price = replace(item['price'], ',', '.')
+		store = str(item['store'])
+		line  = isbn + ITEM_SEPERATOR
+		line  = line + link + ITEM_SEPERATOR
+		line  = line + price + ITEM_SEPERATOR
+		line  = line + store + "\n"
+		self.out_file.write(line)
 		return item
 

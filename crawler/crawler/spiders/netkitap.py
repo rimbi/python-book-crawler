@@ -19,7 +19,7 @@ class NetkitapSpider(CrawlSpider):
     def parse_item(self, response):
 		l = XPathItemLoader(item=BookItem(), response=response)
 		l.add_xpath('name',     '//h1[@class=\'kitapad14pnt\']/b/text()')
-		l.add_xpath('isbn',     '//span[@class=\'kunye\']/text()', u'ISBN: ([0-9\-]+)')
+		l.add_xpath('isbn',     '//span[@class=\'kunye\']/text()', u'ISBN: ([0-9\-X]+)')
 		l.add_xpath('author',   '//span[@class=\'yazarad12pnt\']/a/span[@class=\'yazarad12pnt\']/text()')
 		l.add_xpath('publisher','//h3[@class=\'kapakyazisi\']/b/font/a/text()')
 		l.add_xpath('price',    '//span[@class=\'kapakyazisi\']/font/b/text()', u'(.*) TL')
