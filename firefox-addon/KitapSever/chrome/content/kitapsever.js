@@ -45,7 +45,7 @@ function notify(responseText) {
 		return;
 	}
 
-	fragment.appendChild(document.createTextNode("Bu kitabi "));
+	fragment.appendChild(document.createTextNode("Bu kitabı, "));
 	for (var i = 0, book; book = bookList[i]; i++) {
 		var bookStore = book.getAttribute("store");
 		var bookPrice = book.getAttribute("price");
@@ -78,7 +78,7 @@ function notify(responseText) {
 	} else {
 		message = " sitelerinden ";
 	}
-	message = message + "satin alabilirsiniz!";
+	message = message + "satın alabilirsiniz!";
 	fragment.appendChild(document.createTextNode(message));
 
 	var notification = nb.appendNotification('', 'kitapsever-notification', 'chrome://KitapSever/skin/kitapsever.png');
