@@ -1,5 +1,9 @@
 var bookStoreList = new Array("imge.com.tr", "idefix.com", "kitapyurdu.com", "pandora.com.tr", "netkitap.com", "ilknokta.com");
 
+//
+// GetDomain()
+// Returns domain name of the site currently being browsed.
+//
 function GetDomain() {
 
 	// Lets check first if url is what we need
@@ -13,7 +17,6 @@ function GetDomain() {
 		re = new RegExp("www\." + domain + ".*", "g");
 		valid = url.match(re);
 		if (valid) {
-			Firebug.Console.log("valid domain is " + domain);
 			return domain;
 		}
 	}
@@ -35,6 +38,12 @@ function notify(responseText) {
 	var link = new Array(bookList.length);
 	var domain = GetDomain();
 	var message = "";
+	var nb = gBrowser.getNotificationBox();
+
+	if (nb.currentNotification) {
+		// Check if we are already displaying notification box.
+		return;
+	}
 
 	fragment.appendChild(document.createTextNode("Bu kitabi "));
 	for (var i = 0, book; book = bookList[i]; i++) {
@@ -42,9 +51,8 @@ function notify(responseText) {
 		var bookPrice = book.getAttribute("price");
 		var bookLink = book.getAttribute("link");
 		var storeName = bookStoreList[bookStore - 1];
-		Firebug.Console.log("store name is " + storeName);
+
 		if (domain == storeName) {
-			Firebug.Console.log("Same domain!, it means the site has one of the cheapest");
 			return;
 		}
 
@@ -62,7 +70,7 @@ function notify(responseText) {
 			fragment.appendChild(document.createTextNode(", "));
 		}
 	}
-	Firebug.Console.log("booklist length " + bookList.length);
+
 	if (bookList.length == 0) {
 		return;
 	} else if (bookList.length == 1) {
@@ -73,17 +81,14 @@ function notify(responseText) {
 	message = message + "satin alabilirsiniz!";
 	fragment.appendChild(document.createTextNode(message));
 
-	var nb = gBrowser.getNotificationBox();
 	var notification = nb.appendNotification('', 'kitapsever-notification', 'chrome://KitapSever/skin/kitapsever.png');
 	var messageText = document.getAnonymousElementByAttribute(notification, "anonid", "messageText");
 	messageText.removeChild(messageText.firstChild);
 	messageText.appendChild(fragment);
-
 };
 
 
 var KitapSever = function () {
-	var prefManager = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
 	return {
 		init : function (event) {
 			if (event.originalTarget instanceof HTMLDocument) {
@@ -91,10 +96,11 @@ var KitapSever = function () {
 				if (win.frameElement) {
 					// Lets check, if we support what is being browsed.
 					var ret = GetDomain();
-					if (ret) {
-						Firebug.Console.log("This site should be queried");
-						KitapSever.run();
+					if (!ret) {
+						return;
 					}
+
+					KitapSever.run();
 				}
 			}
 		},
