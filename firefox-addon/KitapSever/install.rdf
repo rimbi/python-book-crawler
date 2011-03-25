@@ -4,10 +4,10 @@
 
 	<Description about="urn:mozilla:install-manifest">
 		<em:id>sardok@gmail.com</em:id>
-		<em:name>Kitap Sever</em:name>
+		<em:name>KitapSever</em:name>
 		<em:version>0.1</em:version>
 		<em:type>2</em:type>
-		<em:description>Kitap Sever</em:description>
+		<em:description>KitapSever</em:description>
 		<em:homepageURL>http://www.returneksibir.com/kitapsever</em:homepageURL>
 		<em:targetApplication>
 			<Description>
