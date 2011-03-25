@@ -1,12 +1,12 @@
 var bookStoreList = new Array("imge.com.tr", "idefix.com", "kitapyurdu.com", "pandora.com.tr", "netkitap.com", "ilknokta.com");
 
-//
-// GetDomain()
-// Returns domain name of the site currently being browsed.
-//
+/*
+ * GetDomain()
+ * Returns domain name of the site currently being browsed.
+ */
 function GetDomain() {
 
-	// Lets check first if url is what we need
+	/* Lets check first if url is what we need. */
 	var valid = null;
 	var url;
 	var re;
@@ -24,12 +24,12 @@ function GetDomain() {
 	return null;
 };
 
-//
-// notify()
-// This function notifies the user about available books with using NotificationBox.
-// Extra work here is done to make a link in NotificationBox. Naturally NotificationBox does not
-// allow you to change string format. We do "Anonymous Content" trick here, in order to do that.
-//
+/*
+ * notify()
+ * This function notifies the user about available books with using NotificationBox.
+ * Extra work here is done to make a link in NotificationBox. Naturally NotificationBox does not
+ * allow you to change string format. We do "Anonymous Content" trick here, in order to do that.
+ */
 function notify(responseText) {
 	parser=new DOMParser();
 	responseXML=parser.parseFromString(responseText,"text/xml");
@@ -41,7 +41,7 @@ function notify(responseText) {
 	var nb = gBrowser.getNotificationBox();
 
 	if (nb.currentNotification) {
-		// Check if we are already displaying notification box.
+		/* Check if we are already displaying notification box. */
 		return;
 	}
 
@@ -94,7 +94,7 @@ var KitapSever = function () {
 			if (event.originalTarget instanceof HTMLDocument) {
 				var win = event.originalTarget.defaultView;
 				if (win.frameElement) {
-					// Lets check, if we support what is being browsed.
+					/* Lets check, if we support what is being browsed. */
 					var ret = GetDomain();
 					if (!ret) {
 						return;
@@ -124,8 +124,10 @@ var KitapSever = function () {
 }();
 
 window.addEventListener("load", function () {
-		// Callback runs every time a document loads.
-		// This piece of code is copied from;
-		// https://developer.mozilla.org/en/Code_snippets/Tabbed_browser
+		/*
+		 * Callback runs every time a document loads.
+		 * This piece of code is copied from;
+		 * https://developer.mozilla.org/en/Code_snippets/Tabbed_browser
+		 */
 		gBrowser.addEventListener("load", KitapSever.init, true);
 	}, false);
