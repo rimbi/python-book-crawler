@@ -22,7 +22,7 @@ class KitapyurduSpider(CrawlSpider):
 		l.add_xpath('isbn',     '//span[@class=\'normalkucuk\']/text()', u'ISBN:([0-9X]+)')
 		l.add_xpath('author',   '//span/a[contains(@href, "/yazar/")]/text()')
 		l.add_xpath('publisher','//span/a[contains(@href, "/yayinevi/")]/text()')
-		l.add_xpath('price',    '//td/text()', u'Kitapyurdu Fiyatı:(.*) TL\.')
+		l.add_xpath('price',    '//td/text()', u'Kitapyurdu Fiyatı:\s([0-9,]*).*')
 		l.add_value('link', response.url)
 		l.add_value('store', 3)
 		return l.load_item()
