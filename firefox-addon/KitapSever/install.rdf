@@ -4,6 +4,7 @@
 
 	<Description about="urn:mozilla:install-manifest">
 		<em:id>sardok@gmail.com</em:id>
+<<<<<<< HEAD
 		<em:name>Kitap Sever</em:name>
 		<em:version>1.0</em:version>
 		<em:type>2</em:type>
@@ -12,11 +13,22 @@
 		<em:homepageURL>http://www.returneksibir.com/kitapsever</em:homepageURL>
 		<em:optionsURL>chrome://kitapsever/content/options.xul</em:optionsURL>
 
+=======
+		<em:name>KitapSever</em:name>
+		<em:version>0.1</em:version>
+		<em:type>2</em:type>
+		<em:description>KitapSever</em:description>
+		<em:homepageURL>http://www.returneksibir.com/kitapsever</em:homepageURL>
+>>>>>>> zaknafein/master
 		<em:targetApplication>
 			<Description>
 				<em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
 				<em:minVersion>2.0</em:minVersion>
+<<<<<<< HEAD
 				<em:maxVersion>3.10</em:maxVersion>
+=======
+				<em:maxVersion>4.0.*</em:maxVersion>
+>>>>>>> zaknafein/master
 			</Description>
 		</em:targetApplication>
 	</Description>      

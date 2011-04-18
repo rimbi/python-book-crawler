@@ -4,7 +4,7 @@
 <body>
 <script type="text/javascript">
 function sendServiceRequest(selectedText, callback) {
-    var serviceCall = "http://127.0.0.1:8000/myapp/default/query.xml?column_name=isbn&query_string=" + selectedText;
+    var serviceCall = "http://rimbiskitapsever.appspot.com/bookbyisbn?isbn=" + selectedText;
     var req = new XMLHttpRequest();
     req.open("GET", serviceCall, true);
     req.onload = showBooks;

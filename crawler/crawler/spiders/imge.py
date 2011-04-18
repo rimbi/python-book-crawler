@@ -19,8 +19,8 @@ class ImgeSpider(CrawlSpider):
     def parse_item(self, response):
 		l = XPathItemLoader(item=BookItem(), response=response)
 		l.add_xpath('name',     '//td[@class=\'pageHeading\']/text()')
-		l.add_xpath('isbn',     '//td[@class=\'main\']/text()', u'ISBN: ([0-9]+)')
-		l.add_xpath('isbn',     '//td[@class=\'main\']/p/text()', u'ISBN: ([0-9]+)')
+		l.add_xpath('isbn',     '//td[@class=\'main\']/text()', u'ISBN: ([0-9X]+)')
+		l.add_xpath('isbn',     '//td[@class=\'main\']/p/text()', u'ISBN: ([0-9X]+)')
 		l.add_xpath('isbn',     '//td[@class=\'main\']/p/text()', u'Barkod: ([0-9]+)')
 		l.add_xpath('author',   '//a[contains(@href, "/person.php")]/b/font/text()')
 		l.add_xpath('publisher','//a[contains(@href, "manufacturers_id=")]/b/font/text()')

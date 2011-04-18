@@ -18,6 +18,11 @@ NEWSPIDER_MODULE = 'crawler.spiders'
 DEFAULT_ITEM_CLASS = 'crawler.items.BookItem'
 #USER_AGENT = '%s/%s' % (BOT_NAME, BOT_VERSION)
 USER_AGENT = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13'
-ITEM_PIPELINES = ['crawler.pipelines.DbExportPipeline']
+ITEM_PIPELINES = [
+#				  'crawler.pipelines.FileExportPipeline', 
+				  'crawler.pipelines.AppEngineExportPipeline'
+				  ]
 CONCURRENT_REQUESTS_PER_SPIDER = 1
-DOWNLOAD_DELAY = 2
+DOWNLOAD_DELAY = 1
+BOOK_SERVICE_ADDRESS = 'http://rimbiskitapsever.appspot.com/book'
+#BOOK_SERVICE_ADDRESS = 'http://localhost:8080/book'
