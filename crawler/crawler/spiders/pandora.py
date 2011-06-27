@@ -23,7 +23,7 @@ class PandoraSpider(CrawlSpider):
 		l.add_xpath('isbn',     '//span[@id="ContentPlaceHolderMainOrta_LabelIsbn"]/text()')
 		l.add_xpath('author',   '//span[@id="ContentPlaceHolderMainOrta_LabelYazar"]/a/text()')
 		l.add_xpath('publisher','//a[@id="ContentPlaceHolderMainOrta_HyperLinkYayinci"]/text()')
-		l.add_xpath('price',    '//span[@class=\'fiyat\']/text()', u'(.*) TL')
+		l.add_xpath('price',    '//span[@id=\'ContentPlaceHolderMainOrta_LabelFiyat\']/span[@class=\'fiyat\']/text()', u'(.*) TL')
 		l.add_value('link', response.url)
 		l.add_value('store', 4)
 		return l.load_item()
