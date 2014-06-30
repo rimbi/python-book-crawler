@@ -1,0 +1,19 @@
+<html>
+	<body>
+		<table border="1">
+			<tr>
+				<th>ISBN</th>
+				<th>Price</th>
+				<th>Link</th>
+			</tr>
+			{% for book in books %}
+			<tr>
+				<td>{{ book.isbn|escape }}</td>
+				<td>{{ book.price|escape }}</td>
+				<td><a href="{{ book.link|escape }}">{{ book.link|escape }}</a></td>
+				<td>{{ book.store|escape }}</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</body>
+</html>

@@ -1,0 +1,5 @@
+<books>
+{% for book in books %}
+	<book isbn="{{ book.isbn|escape }}" link="{{ book.link|escape }}" price="{{ book.price|escape }}" store="{{ book.store|escape }}"/>
+{% endfor %}
+</books>

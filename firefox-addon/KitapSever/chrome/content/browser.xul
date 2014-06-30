@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://kitapsever/skin/skin.css" type="text/css"?>
+<!DOCTYPE kitapsever SYSTEM "chrome://kitapsever/locale/translations.dtd">
+<overlay id="sample" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+<<<<<<< HEAD
+
+		<script src="kitapsever.js" />
+
+		<menupopup id="menu_ToolsPopup">
+			<menuitem label="&runkitapsever;" key="link-target-finder-run-key" oncommand="KitapSever.run()"/>
+		</menupopup>
+
+		<keyset>
+
+			<key id="link-target-finder-run-key" modifiers="accel alt shift" key="L" oncommand="KitapSever.run()"/>
+		</keyset>
+
+		<statusbar id="status-bar">
+			<statusbarpanel id="link-target-finder-status-bar-icon" class="statusbarpanel-iconic" src="chrome://kitapsever/skin/status-bar.png" tooltiptext="&runkitapsever;" onclick="KitapSever.run()" />
+		</statusbar>
+
+		<toolbarpalette id="BrowserToolbarPalette">
+			<toolbarbutton id="link-target-finder-toolbar-button" label="Link Target Finder" tooltiptext="&runkitapsever;" oncommand="KitapSever.run()"/>
+		</toolbarpalette>
+</overlay>
+=======
+  <script src="kitapsever.js" />
+</overlay>
+>>>>>>> zaknafein/master
