@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://kitapsever/skin/skin.css" type="text/css"?>
+<!DOCTYPE kitapsever SYSTEM "chrome://kitapsever/locale/translations.dtd">
+<overlay id="sample" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script src="kitapsever.js" />
+</overlay>
